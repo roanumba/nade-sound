@@ -6,16 +6,23 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.0",
     "@testing-library/user-event": "^12.2.2",
+    "@types/express": "^4.17.9",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icons": "^3.11.0",
     "react-scripts": "4.0.0",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "xsound": "^2.20.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_URL=Audio react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "server": "nodemon src/server/server.js",
+    "__eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
