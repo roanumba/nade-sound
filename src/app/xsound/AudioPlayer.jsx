@@ -1,17 +1,16 @@
-import React,{useState,useContext} from 'react';
+import React from 'react';
 import {TechniqueManager} from "./TechniqueManager";
-import {ProgressX} from "./ProgressX";
+import {PlayProgress} from "./PlayProgress";
 import {SongLoader} from "./SongLoader";
 import {FFTAnalyze} from "./analyzers/FFTAnalyze";
 import {TimeAnalyze} from "./analyzers/TimeAnalyze";
 import {TimeOverviewAnalyzer} from "./analyzers/TimeOverviewAnalyzer";
-import {SoundXContext} from "./AudioProvider";
 
 
 const apiUrl = "http://localhost:3030";
 
 
-const PlayerX = () => {
+const AudioPlayer = () => {
 
     return (
 
@@ -19,11 +18,8 @@ const PlayerX = () => {
             <SongLoader apiUrl={apiUrl} />
             <FFTAnalyze key={1} w={80} h={50}/>
             <TimeAnalyze key={2} w={150} h={50}/>
-            <ProgressX/>
-
-
-                <TimeOverviewAnalyzer apiUrl={apiUrl} key={"analyzer"} w={800} h={100} />
-
+            <PlayProgress/>
+            <TimeOverviewAnalyzer apiUrl={apiUrl} key={"analyzer"} w={800} h={100} />
             <TechniqueManager/>
 
         </div>
@@ -31,4 +27,4 @@ const PlayerX = () => {
 
 };
 
-export default PlayerX;
+export default AudioPlayer;

@@ -1,12 +1,17 @@
 import React, {Component, createRef} from 'react';
 import {SoundXContext} from "../AudioProvider";
+import {AnimatePauseIcon, AnimatePlayIcon} from "../../components/musicIcons";
 
-
+export const round=(value,places)=>{
+    const power=Math.pow(10,2);
+    return Math.round(value*power)/power;
+}
 export class TimeOverviewAnalyzer extends Component {
     state = {
         range: {start: 0, end: 50},
         show: false,
-        analyzer: null
+        analyzer: null,
+        playing:false
     }
 
     static contextType = SoundXContext;
@@ -21,8 +26,11 @@ export class TimeOverviewAnalyzer extends Component {
         this.context.audioListener.timeOverviewAnalyzer = null;
     }
 
-    loaded() {
-        this.setState({show: true});
+    loaded(duration) {
+        const range=this.state.range;
+        range.end=duration;
+        this.setState({show: true,range});
+
 
         /*     const canvas = this.canvasRef.current;
              this.context.audio.createOverviewAnalyzer(canvas);*/
@@ -45,19 +53,30 @@ export class TimeOverviewAnalyzer extends Component {
     setRange = (range) => {
         this.setState({range})
     }
+    toggle=()=>{
+        if (this.state.playing){
+            this.stop()
+        }else{
+            this.play()
+        }
+    }
 
+     stop = () => {
+        this.setState({playing:false})
+        this.context.audio.stop();
+    }
+     play = () => {
+         this.setState({playing:true})
+        const range=this.state.range;
+        this.context.audio.playRange(range.start, range.end);
+    }
     render() {
 
         const {w, h} = this.props;
         const {range, show} = this.state;
 
-
-        const stop = () => {
-            this.context.audio.stop();
-        }
-        const play = () => {
-            this.context.audio.playRange(range.start, range.end);
-        }
+        const startMin=round(range.start/60,2);
+        const endMin=round(range.end/60,2);
 
         return (
             <div>
@@ -65,9 +84,11 @@ export class TimeOverviewAnalyzer extends Component {
                 <div>
                     <canvas ref={this.canvasRef} width={w} height={h}></canvas>
                     <br/>
-                    <span>{range.start} sec</span> - <span>{range.end} sec</span><br/>
-                    <button onClick={play}>play</button>
-                    <button onClick={stop}>stop</button>
+                    {show &&
+                        <div><span>{startMin}</span> - <span>{endMin}</span><br/>
+                            <div onClick={this.toggle}>{this.state.playing ? <AnimatePauseIcon/> :
+                                <AnimatePlayIcon/>}</div>
+                        </div>   }
                 </div>
                 }
 

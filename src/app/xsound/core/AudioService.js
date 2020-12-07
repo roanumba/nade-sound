@@ -14,7 +14,7 @@ const param={
     // textinterval : 10
 };
 
-class ServiceX {
+class AudioService {
 
     audioEventListener;
 
@@ -213,4 +213,4 @@ class ServiceX {
 
 }
 
-export default ServiceX;
+export default AudioService;

@@ -1,9 +1,10 @@
 import React, {Component, useState} from 'react';
 import {AnimatePauseIcon, AnimatePlayIcon} from "../components/musicIcons";
 import {SoundXContext} from "./AudioProvider";
+import {round} from "./analyzers/TimeOverviewAnalyzer";
 
 
-export class ProgressX extends Component {
+export class PlayProgress extends Component {
     static contextType = SoundXContext;
 
     state = {
@@ -49,19 +50,21 @@ export class ProgressX extends Component {
 
     render() {
         const {max, pos, show,playing} = this.state;
+        const posMin=round(pos/60,2);
+        const endMin=round(max/60,2);
         return (
             <div>
                 {show &&
                     <div>
                         <div onClick={this.toggle}>{playing ? <AnimatePauseIcon/> : <AnimatePlayIcon/>}</div>
-                        {Math.floor(pos)}<br/>
-                        0-<input onChange={this.changed}
+                        {posMin}<br/>
+                        0 <input onChange={this.changed}
                                  type={"range"}
                                  min={0}
                                  max={max}
                                  value={pos}
                                  style={{width: 800}}
-                    />-{Math.floor(max)}
+                    /> {endMin}
                     </div>
                 }
             </div>
